@@ -1,0 +1,30 @@
+{
+  "name": "christmascountdown",
+  "version": "1.0.0",
+  "description": "A Christmas Countdown timer for NodeJS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Roberto-batman/ChristmasCountdown.git"
+  },
+  "keywords": [
+    "Christmas",
+    "Countdown",
+    "NodeJS",
+    "Javascript",
+    "Roberto-batman"
+  ],
+  "author": "Instafluff",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Roberto-batman/ChristmasCountdown/issues"
+  },
+  "homepage": "https://github.com/Roberto-batman/ChristmasCountdown#readme",
+  "dependencies": {
+    "express": "^4.21.2",
+    "webwebweb": "^1.6.1"
+  }
+}
