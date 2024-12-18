@@ -12,8 +12,10 @@ spec:
       labels:
         app: christmas-countdown
     spec:
+      imagePullSecrets:
+      - name: acr-credentials    
       containers:
       - name: christmas-countdown
         image: learnkube5reg.azurecr.io/christmas-count-image:latest
         ports:
-        - containerPort: 3000
+        - containerPort: 8080
