@@ -12,11 +12,7 @@ RUN npm install
 # Copy the rest of the application
 COPY . .
 
-<<<<<<< HEAD
-# Expose the port your app listens on...w1027.
-=======
-# Expose the port your app listens on...
->>>>>>> 7f3c16eb43e0cf3d91e9d0f686a6bb70433ad32a
+# Expose the port your app listens on
 EXPOSE 8080
 
 # Use nodemon to start the application
