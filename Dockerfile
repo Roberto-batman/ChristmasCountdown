@@ -1,14 +1,19 @@
-FROM node: 18-alpine
+FROM node:18-alpine
 
+# Set the working directory
 WORKDIR /usr/src/app
 
-COPY package*.json ./
+# Copy only the package.json (and optionally package-lock.json) for dependency installation
+COPY package.json ./
 
+# Install dependencies
 RUN npm install
-# If you are building your code for production
-# RUN npm ci --omit=dev
 
+# Copy the rest of the application code
 COPY . .
 
+# Expose the port the app runs on
 EXPOSE 3000
-CMD [ "node", "server.js" ]
+
+# Run the application
+CMD ["node", "server.js"]
