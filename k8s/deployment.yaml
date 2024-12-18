@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: christmas-countdown-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: christmas-countdown
+  template:
+    metadata:
+      labels:
+        app: christmas-countdown
+    spec:
+      containers:
+      - name: christmas-countdown
+        image: learnkube5reg.azurecr.io/christmas-count-image:latest
+        ports:
+        - containerPort: 3000
