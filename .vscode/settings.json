@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/0ddba430-e789-4083-b18a-f1a65e8d1cae/resourceGroups/appsvc_linux_centralus/providers/Microsoft.Web/sites/christmascountdown5",
+    "appService.deploySubpath": "."
+}
