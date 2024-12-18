@@ -38,8 +38,8 @@ jobs:
       uses: azure/aks-set-context@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }}
-        cluster-name: <your-cluster-name>
-        resource-group: <your-resource-group>
+        cluster-name: learn-kube5-cluster
+        resource-group: learnkube5reg
 
     - name: Deploy to AKS
       run: |
