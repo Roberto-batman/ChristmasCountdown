@@ -1,48 +1,48 @@
-name: Trigger auto deployment for christmascountdown
+name: Deploy to AKS
 
-# When this action will be executed
 on:
-  # Automatically trigger it when detected changes in repo
   push:
-    branches: 
-      [ main ]
-    paths:
-    - '**'
-    - '.github/workflows/christmascountdown-AutoDeployTrigger-afbaa3ca-ba7b-420a-beb7-6f55034089e2.yml'
-
-  # Allow manual trigger 
-  workflow_dispatch:      
+    branches:
+      - main
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions: 
-      id-token: write #This is required for requesting the OIDC JWT Token
-      contents: read #Required when GH token is used to authenticate with private repo
 
     steps:
-      - name: Checkout to the branch
-        uses: actions/checkout@v2
+    # Checkout repository
+    - name: Checkout Code
+      uses: actions/checkout@v3
 
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          client-id: ${{ secrets.CHRISTMASCOUNTDOWN_AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.CHRISTMASCOUNTDOWN_AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.CHRISTMASCOUNTDOWN_AZURE_SUBSCRIPTION_ID }}
+    # Log in to Azure
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Build and push container image to registry
-        uses: azure/container-apps-deploy-action@v2
-        with:
-          appSourcePath: ${{ github.workspace }}
-          _dockerfilePathKey_: _dockerfilePath_
-          registryUrl: 
-          registryUsername: ${{ secrets.CHRISTMASCOUNTDOWN_REGISTRY_USERNAME }}
-          registryPassword: ${{ secrets.CHRISTMASCOUNTDOWN_REGISTRY_PASSWORD }}
-          containerAppName: christmascountdown
-          resourceGroup: learn-kubernetics4
-          imageToBuild: default/[parameters('containerAppName')]:${{ github.sha }}
-          _buildArgumentsKey_: |
-            _buildArgumentsValues_
+    # Build Docker image
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v4
+      with:
+        context: .
+        push: true
+        tags: learnkube5reg.azurecr.io/christmas-count-image:${{ github.sha }}
 
+    # Deploy to AKS
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+
+    - name: Set up AKS
+      uses: azure/aks-set-context@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        cluster-name: <your-cluster-name>
+        resource-group: <your-resource-group>
+
+    - name: Deploy to AKS
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
 
